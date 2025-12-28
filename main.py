@@ -21,7 +21,7 @@ def L():
     i1.minsize("1000", "560")
     i1.maxsize("1000", "560")
 
-    bg = PhotoImage(file=r"Memory-Game\photos\main_background.png")
+    bg = PhotoImage(file=r"photos\main_background.png")
 
     label2 = Label(i1, image=bg)
     label2.place(x=0, y=0)
@@ -60,7 +60,7 @@ def L():
                     Gname = Name.get()  # save permanently
                     i2.destroy()
                     pygame.mixer.init()
-                    pygame.mixer.music.load(r"Memory-Game\sounds\game-start-6104.mp3")
+                    pygame.mixer.music.load(r"sounds\game-start-6104.mp3")
                     pygame.mixer.music.play(loops=0)
                 else:
                     messagebox.showinfo(title="Error", message="Please enter your name")
@@ -79,7 +79,7 @@ def L():
         else:
             # if already have name, just play sound and continue
             pygame.mixer.init()
-            pygame.mixer.music.load(r"Memory-Game\sounds\game-start-6104.mp3")
+            pygame.mixer.music.load(r"sounds\game-start-6104.mp3")
             pygame.mixer.music.play(loops=0)
         # ---- END CHANGE ----
 
@@ -89,15 +89,15 @@ def L():
         i3.minsize("668", "668")
         i3.maxsize("668", "668")
         i3.configure(cursor="shuttle")
-        backbutton = PhotoImage(file=r"Memory-Game\photos\background.png")
-        mercury = PhotoImage(file=r"Memory-Game\photos\mercury.png")
-        venus = PhotoImage(file=r"Memory-Game\photos\venus.png")
-        earth = PhotoImage(file=r"Memory-Game\photos\earth.png")
-        mars = PhotoImage(file=r"Memory-Game\photos\mars.png")
-        jupiter = PhotoImage(file=r"Memory-Game\photos\jupiter.png")
-        saturn = PhotoImage(file=r"Memory-Game\photos\saturn.png")
-        uranus = PhotoImage(file=r"Memory-Game\photos\uranus.png")
-        neptune = PhotoImage(file=r"Memory-Game\photos\neptune.png")
+        backbutton = PhotoImage(file=r"photos\background.png")
+        mercury = PhotoImage(file=r"photos\mercury.png")
+        venus = PhotoImage(file=r"photos\venus.png")
+        earth = PhotoImage(file=r"photos\earth.png")
+        mars = PhotoImage(file=r"photos\mars.png")
+        jupiter = PhotoImage(file=r"photos\jupiter.png")
+        saturn = PhotoImage(file=r"photos\saturn.png")
+        uranus = PhotoImage(file=r"photos\uranus.png")
+        neptune = PhotoImage(file=r"photos\neptune.png")
 
         l = [mercury, venus, earth, mars, jupiter, saturn, uranus, neptune] * 2
         random.shuffle(l)
@@ -124,6 +124,7 @@ def L():
                 self.button = button
 
             def f(self):
+                start_ui = time.perf_counter() 
                 global l1
                 global l2
                 global l3
@@ -133,6 +134,13 @@ def L():
                     l1.append(self.text)
                     l2.append(self.button)
                     self.button.configure(image=self.text)
+
+                    self.button.update_idletasks()
+                    end_ui = time.perf_counter()
+
+                    print(f"Card reveal response time: {(end_ui - start_ui)*1000:.2f} ms")
+
+
                     if len(l2) != 0:
                         if len(l1) == 2:
                             self.button.update_idletasks()
@@ -147,7 +155,7 @@ def L():
                                 for i in l2:
                                     pygame.mixer.init()
                                     pygame.mixer.music.load(
-                                        r"Memory-Game\sounds\correct response.mp3"
+                                        r"sounds\correct response.mp3"
                                     )
                                     pygame.mixer.music.play(loops=0)
                                     i.configure(command=lambda: None)
@@ -157,17 +165,17 @@ def L():
                                 n = n + 1
                 if len(l3) == 16:
                     t2 = time.time()
-                    with open(r"Memory-Game\record.csv", "r") as A:
+                    with open(r"record.csv", "r") as A:
                         csv_reader = csv.reader(A)
                         next(csv_reader)
                         K = 1
                         for i in csv_reader:
                             K += 1
-                    with open(r"Memory-Game\record.csv", "a") as A:
+                    with open(r"record.csv", "a") as A:
                         A.write(
                             f"{K},{Gname},{n},{str(datetime.timedelta(seconds=t2-t1))[2:7]}\n"
                         )
-                    with open(r"Memory-Game\record.csv", "r") as A:
+                    with open(r"record.csv", "r") as A:
                         csv_reader = csv.reader(A)
                         next(csv_reader)
                     i3.destroy()
@@ -194,7 +202,7 @@ def L():
 
                     M = []
                     T = []
-                    with open(r"Memory-Game\record.csv", "r") as B:
+                    with open(r"record.csv", "r") as B:
                         csv_reader = csv.reader(B)
                         next(csv_reader)
                         for i in csv_reader:
@@ -311,7 +319,7 @@ def L():
 
             tree.configure()
 
-            with open(r"Memory-Game\record.csv", "r") as B:
+            with open(r"record.csv", "r") as B:
                 csv_reader = csv.reader(B)
                 next(csv_reader)
                 for i in csv_reader:
@@ -328,7 +336,7 @@ def L():
             s2.pack(side="top")
             M = []
             T = []
-            with open(r"Memory-Game\record.csv", "r") as B:
+            with open(r"record.csv", "r") as B:
                 csv_reader = csv.reader(B)
                 next(csv_reader)
                 for i in csv_reader:
