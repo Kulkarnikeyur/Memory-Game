@@ -16,8 +16,12 @@ def open_dashboard():
     Label(root, image=root.bg).place(x=0, y=0)
 
     Label(
-        root, text="Planetary Pairs", font="times 25 italic ", background="white"
-    ).pack(side="top", ipadx=50, ipady=20, pady=100)
+        root,
+        text="Planetary Pairs",
+        font=("Times", 36, "italic"),
+        fg="white",
+        bg="black"
+    ).place(relx=0.5, rely=0.2, anchor="center")
 
     def start():
         root.destroy()
@@ -28,17 +32,38 @@ def open_dashboard():
         open_history_screen()
 
     
-    Button(
-        root, text="New Game", font="times 15 bold", background="white", command=start
-    ).pack(side="left", expand=True, fill=X, padx=100, ipadx=20, ipady=10)
+    # ---------------- BUTTON STYLE ----------------
+    btn_style = {
+        "font": ("Times", 16, "bold"),
+        "width": 15,
+        "height": 2,
+        "bg": "#1f2a44",
+        "fg": "white",
+        "bd": 0,
+        "activebackground": "#2e3f66",
+        "activeforeground": "white",
+        "cursor": "hand2"
+    }
 
-    Button(
-        root, text="View History", font="times 15 bold", background="white", command=history
-    ).pack(side="right", expand=TRUE, fill=X, padx=80, ipadx=20, ipady=10)
+    def on_enter(e):
+        e.widget["bg"] = "#3b5998"
 
-    Button(
-        root, text="exit", font="times 15 bold", background="white", command=root.destroy
-    ).pack(side="bottom", expand=True, fill=X, padx=100, ipadx=20, ipady=10)
+    def on_leave(e):
+        e.widget["bg"] = "#1f2a44"
 
+
+    new_game = Button(root, text="New Game", command=start, **btn_style)
+    new_game.place(relx=0.3, rely=0.65, anchor="center")
+
+    history_btn = Button(root, text="View History", command=history, **btn_style)
+    history_btn.place(relx=0.7, rely=0.65, anchor="center")
+
+    exit_btn = Button(root, text="Exit", command=root.destroy, **btn_style)
+    exit_btn.place(relx=0.5, rely=0.8, anchor="center")
+
+
+    for btn in [new_game, history_btn, exit_btn]:
+        btn.bind("<Enter>", on_enter)
+        btn.bind("<Leave>", on_leave)
 
     root.mainloop()

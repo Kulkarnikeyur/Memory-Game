@@ -10,7 +10,11 @@ def start_game(player_name):
     root = Tk()
 
     root.title("Memory Game")
-
+    root.geometry("668x668+350+1")
+    root.minsize("668", "668")
+    root.maxsize("668", "668")
+    root.configure(cursor="shuttle")
+    
     backbutton = PhotoImage(file="photos/background.png")
     mercury = PhotoImage(file="photos/mercury.png")
     venus = PhotoImage(file="photos/venus.png")
